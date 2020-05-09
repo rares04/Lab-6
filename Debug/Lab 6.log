@@ -1,19 +1,5 @@
-﻿  FilmRepository.cpp
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(13,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(35,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(45,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(55,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(65,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(76,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(91,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(107,20): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(115,22): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(124,22): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(162,39): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(168,39): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(174,39): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(181,39): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(188,40): warning C4018: '<': signed/unsigned mismatch
-D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(110): warning C4715: 'FilmRepository::getFilm_byMatch': not all control paths return a value
+﻿  Main.cpp
+  TestValidation.cpp
+  Tests.cpp
+  Generating Code...
   Lab 6.vcxproj -> D:\Facultate\Semestrul 2\C++\Lab 6\Debug\Lab 6.exe

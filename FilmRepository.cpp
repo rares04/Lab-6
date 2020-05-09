@@ -82,7 +82,8 @@ void FilmRepository::deleteFilm(Film _film) {
 		}
 	
 	// If the film does not exist -> Error message
-	cout << "\tFilm " << _film.getTitel() << " existiert nicht, nichts wird geloscht\n";
+	if(found == false)
+		cout << "\tFilm " << _film.getTitel() << " existiert nicht, nichts wird geloscht\n";
 }
 
 

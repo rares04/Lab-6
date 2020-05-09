@@ -139,7 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Administrator.cpp" />
-    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="BadInput.cpp" />
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="FilmRepository.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -147,19 +147,21 @@
     <ClCompile Include="TestRepo.cpp" />
     <ClCompile Include="Tests.cpp" />
     <ClCompile Include="TestUser.cpp" />
+    <ClCompile Include="TestValidation.cpp" />
     <ClCompile Include="Ui.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Validation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Administrator.h" />
-    <ClInclude Include="Exception.h" />
+    <ClInclude Include="BadInput.h" />
     <ClInclude Include="Film.h" />
     <ClInclude Include="FilmRepository.h" />
     <ClInclude Include="TestAdmin.h" />
     <ClInclude Include="TestRepo.h" />
     <ClInclude Include="Tests.h" />
     <ClInclude Include="TestUser.h" />
+    <ClInclude Include="TestValidation.h" />
     <ClInclude Include="Ui.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Validation.h" />

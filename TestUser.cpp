@@ -111,5 +111,4 @@ void TestUser::TestAll(){
     Testlike();
     Testsearch_film();
     TestgetFilmRepo();
-    cout << "\n\n";
 }

@@ -2,6 +2,7 @@
 #include "Administrator.h"
 #include <iostream>
 #include <algorithm>
+#include "BadInput.h"
 #include "Validation.h"
 
 using namespace std;
@@ -17,37 +18,27 @@ void Ui::ui_main() {
     //Infos for the mode, and selection of the mode
     User utilizator;
     Administrator administrator;
-    string mode = "Select Mode\n"
+    string mode = "\nSelect Mode\n"
                   "0. For exit"
                   "\n1. For user\n"
                   "2. For admin";
 
     string input;
-    cout << mode;
-    cout << "\nInput: "; cin >> input;
-   
-
-    // Validating the input
     Validation valid;
-    while (valid.validate_inputUI(input) == false) {
-        cout << "\nInput was not correct, please choose between 0, 1 and 2\n" << mode << "\nInput: "; cin >> input;
-    }
 
-    while(true) {
-        if (input == "1") {
+    while (true) {
+        // Getting and Validating the input
+        valid.validateCycle(mode, input, "inputUI");
+
+        if (input == "1")
             utilizator = userActions();
-            cout << mode;
-            cout << "\nInput: "; cin >> input;
-        }
-        if (input == "2"){
+        if (input == "2")
             administrator = adminActions();
-            cout << mode;
-            cout << "\nInput: "; cin >> input;
-        }
         if (input == "0")
             break;
     }
 
+    // The programm reaches this point before ending -> write the changes in the file
     this->admin.getFilmRepo().write_movies_to_file("movies.txt");
 }
 
@@ -55,35 +46,26 @@ User Ui::userActions(){
     // Infos for admin actions
     // 4 Possible Operations with 4 if statements
     User utilizator = user;
-    string userActions = "1. To show and add movies by genre\n"
+    string userActions = "\nUser Menu\n1. To show and add movies by genre\n"
                          "2. To rate a movie and delete it\n"
                          "3. To show the watchList\n"
                          "4. To close\n";
+
     string input;
+    Validation valid;
+
     while (true) {
-        cout << "User Mode\n";
-        cout << "\n" << userActions;
-        cout << "\nInput: ";
-        cin >> input;
+        // Getting and Validating the input
+        valid.validateCycle(userActions, input, "inputUI_user");
 
-        // Validating the input
-        Validation valid;
-        while (valid.validate_inputUI_user(input) == false) {
-            cout << "\nInput was not correct, please choose between 1, 2, 3 and 4\n" << userActions << "\nInput: "; cin >> input;
-        }
-
-        if (input == "1"){
+        if (input == "1")
             utilizator = filmGenre();
-        }
-        else if (input == "2"){
+        else if (input == "2")
             utilizator = deleteAndRate();
-        }
-        else if (input == "3"){
+        else if (input == "3")
             utilizator.showWatchList();
-        }
-        else if(input == "4"){
+        else if(input == "4")
             break;
-        }
     }
 
     return utilizator;
@@ -96,39 +78,38 @@ User Ui::filmGenre(){
                   "3.close\n";
 
     string genre = "";
-    int index = 0;
-    cout << "Type Genre:";
-    cin >> genre;
+    cout << "\nType Genre:";
+    cin >> genre;  // No validation for genre needed, because if movies with the given genre don't exit -> all movies will be shown
+    
     // gets all film from the typed genre
     vector <Film> filmeByGenre = user.getFilmRepo().getFilme_byGenre(genre);
+    int index = 0;
     if(!filmeByGenre.empty()){
-        cout << filmeByGenre[index];
+        cout << "\n" << filmeByGenre[index];
         //Opens thr browser with the trailer
         system(std::string("start " + filmeByGenre[index].getTrailer()).c_str());
+        string input;
+        Validation valid;
         while (true) {
-            string input;
-            cout << next;
-            cin >> input;
+            // Getting and Validating the input
+            valid.validateCycle(next, input, "inputUI_3");
 
-            // Validating the input
-            Validation valid;
-            while (valid.validate_inputUI_3(input) == false) {
-                cout << "\nInput was not correct, please choose between  1, 2, and 3\n" << next << "\nInput: "; cin >> input;
-            }
-
-            if (input == "1"){
+            if (input == "1"){  // Adding the film to the watchlist
                 std::vector<Film> v = user.getWatchList();
                 Film key = filmeByGenre[index];
 
+                // Checks if the movie already exists in the watchlist
                 if (std::find(v.begin(), v.end(), key) != v.end()){
-                    cout<< "It is already in the watchList\n";
+                    cout<< "\nIt is already in the watchList\n\n";
                     break;
                 }
+
                 user.addFilmToWatchList(filmeByGenre[index]);
                 index++;
-                cout << "size: " << user.getWatchList().size() << "\n";
+                cout << "\nMovie was added to your watchlist\nSize of the watchlist: " << user.getWatchList().size() << "\n";
+                break;
             }
-            else if (input == "2") {
+            else if (input == "2") {  // Goes to the next movie
                 if (index == filmeByGenre.size()-1){
                     cout << "\nThere are no more movies with this Genre\n";
                     break;
@@ -139,9 +120,8 @@ User Ui::filmGenre(){
                 system(std::string("start " + filmeByGenre[index].getTrailer()).c_str());
 
             }
-            else if (input == "3") {
+            else if (input == "3")
                 break;
-            }
         }
     }
     else {
@@ -156,11 +136,12 @@ User Ui::deleteAndRate(){
     // checks if a film is in the watchlist, and if it is ,then asks the user if he wants to delete it or rate it
     string title;
     cout << "Enter Title to delete: ";
-    cin.ignore();
+    cin.ignore();  // Taking the correct input, input can be anything, because it will be searched in the list anyway, if not found message will appear
     getline(cin, title);
+
     std::vector<Film> v = user.getWatchList();
     Film key = Film("", "", 0, 0, "");
-    for (int i = 0; i < user.getFilmRepo().getFilme().size(); i++) {  // Checking if the film exists
+    for (size_t i = 0; i < user.getFilmRepo().getFilme().size(); i++) {  // Checking if the film exists
         if (title == user.getFilmRepo().getFilme()[i].getTitel()) {
             key = user.getFilmRepo().getFilme()[i];
             break;
@@ -177,15 +158,10 @@ User Ui::deleteAndRate(){
                                   "2. Just delete\n"
                                   "3. Cancel\n"
                                   "Input: ";
-            cout << instructions;
-            cin >> input;
 
-            // Validating the input
             Validation valid;
-            while (valid.validate_inputUI_3(input) == false) {
-                cout << "\nInput was not correct, please choose between  1, 2, and 3\n" << instructions  << "\nInput: "; cin >> input;
-            }
-
+            // Getting and Validating the input
+            valid.validateCycle(instructions, input, "inputUI_3");
             if(input == "1") {
                 user.like(key);
                 admin.updateLikes(key, key.getLikes() + 1);
@@ -206,71 +182,38 @@ User Ui::deleteAndRate(){
 
 Administrator Ui::adminActions(){
     // infos about the 5 admin operations
-    string adminActions = "1. To Add a film\n"
+    string adminActions = "\n1. To Add a film\n"
                           "2. To remove a film\n"
                           "3. To edit a film\n"
                           "4. To show all films\n"
                           "5. To close\n";
     while (true) {
         string input;
-        cout << "Admin Mode\n";
-        cout << "\n" << adminActions;
-        cout << "\nInput: ";
-        cin >> input;
-
-        // Validating the input
         Validation valid;
-        while (valid.validate_inputUI_admin(input) == false) {
-            cout << "\nInput was not correct, please choose between 1, 2, 3, 4 and  5\n" << adminActions << "\nInput: "; cin >> input;
-        }
+        // Getting and Validating the input
+        valid.validateCycle(adminActions, input, "inputUI_admin");
         // reads all the film atributes from input and add the film to the repo
         if (input == "1"){
-            string title;
-            string genre;
-            double jahr;
-            double likes;
-            string trailer;
-            cout<<"Enter Title: "; cin >> title;
-            // Validating the input
-            Validation valid;
-            while (valid.validate_inputUi_number(title) == true) {
-                cout << "\nInput was not correct, please choose a non numeric name\n" << "\nEnter Title: "; cin >> title;
-            }
-            cout<<"Enter Genre: "; cin >> genre;
-            // Validating the input
-            while (valid.validate_inputUi_number(genre) == true) {
-                cout << "\nInput was not correct, please choose a non numeric genre\n" <<"\nEnter Genre: "; cin >> genre;
-            }
-            cout<<"Enter Jahr: "; cin >> jahr;
-            // Validating the input
-            while(!cin || valid.validate_inputUi_jahr(jahr) == false) // or if(cin.fail())
-            {
-                // user didn't input a number
-                if(!cin){
-                    cin.clear(); // reset failbit
-                    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //skip bad input
-                    cout<<"Invalid input\n";
-                    cout<<"Enter Jahr: "; cin >> jahr;
+            string title, genre, jahr, likes, trailer;
+            
+            // Getting and Validating the input
+            valid.validateCycle("", title, "titel");
 
-                } else if (valid.validate_inputUi_jahr(jahr) == false) {
-                    cout << "\nInput was not correct, please choose a correct number\n" << "\nEnter Jahr: "; cin >> jahr;
-                }
-            }
-            cout<<"Enter Likes: "; cin >> likes;
-            while(!cin) // or if(cin.fail())
-            {
-                // user didn't input a number
-                cin.clear(); // reset failbit
-                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //skip bad input
-                cout<<"Invalid input\n";
-                cout<<"Enter Likes: "; cin >> likes;
-            }
-            cout<<"Enter Trailer: "; cin >> trailer;
-            // Validating the input
-            while (valid.validate_inputUi_number(title) == true) {
-                cout << "\nInput was not correct, please choose a correct url\n" << "\nEnter Trailer "; cin >> trailer;
-            }
-            Film film = Film(title, genre, jahr, likes, trailer);
+            // Getting and Validating the input
+            valid.validateCycle("", genre, "genre");
+
+            // Getting and Validating the input
+            valid.validateCycle("", jahr, "jahr");
+            
+            // Getting and Validating the input
+            valid.validateCycle("", likes, "likes");
+
+            // Getting and Validating the input
+            valid.validateCycle("", trailer, "trailer");
+
+            double d_jahr = stod(jahr);  // Convert it to type double
+            double d_likes = stod(likes);  // Convert it to type double
+            Film film = Film(title, genre, d_jahr, d_likes, trailer);
             admin.addFilm(film);
         }
         // Checks if the typed film is in the repository and if it is, deletes it
@@ -278,9 +221,9 @@ Administrator Ui::adminActions(){
             string title;
             Film film = Film("", "", 0, 0, "");
             cout << "Enter Title to delete: ";
-            cin.ignore();
+            cin.ignore();  // No need to validate the input, if not found in the repository nothing happens
             getline(cin, title);
-            for (int i = 0; i < admin.getFilmRepo().getFilme().size(); i++){  // Checking if the film exists
+            for (size_t i = 0; i < admin.getFilmRepo().getFilme().size(); i++){  // Checking if the film exists
                 if (title == admin.getFilmRepo().getFilme()[i].getTitel()) {
                     film = admin.getFilmRepo().getFilme()[i];
                     break;
@@ -298,8 +241,8 @@ Administrator Ui::adminActions(){
         else if (input == "3"){
             string title;
             Film film = Film("","",0,0,"");
-            cout<<"Enter Title to edit: ";cin.ignore(); getline(cin, title);
-            for (int i = 0; i < admin.getFilmRepo().getFilme().size(); i++) {  // Checking if the film exists
+            cout<<"Enter Title to edit: ";cin.ignore(); getline(cin, title);  // No need to validate the input, if not found in the repository nothing happens
+            for (size_t i = 0; i < admin.getFilmRepo().getFilme().size(); i++) {  // Checking if the film exists
                 if (title == admin.getFilmRepo().getFilme()[i].getTitel()) {
                     film = admin.getFilmRepo().getFilme()[i];
                     break;
@@ -312,26 +255,21 @@ Administrator Ui::adminActions(){
             while (true) {
                 string input2;
                 //infos for editing a film
-                string instrunctions = "What do you want to edit?\n"
+                string instrunctions = "\nWhat do you want to edit?\n"
                                        "1. To edit title\n"
                                        "2. To edit genre\n"
                                        "3. To edit jahr\n"
                                        "4. To edit likes\n"
                                        "5. To edit Trailer\n"
                                        "Input: ";
-                cout << instrunctions;
-                cin >> input2;
 
-                // Validating the input
-                while (valid.validate_inputUI_admin(input2) == false) {
-                    cout << "\nInput was not correct, please choose between 1, 2, 3, 4 and  5\n" << instrunctions << "\nInput: "; cin >> input;
-                }
+                // Getting and Validating the input
+                valid.validateCycle(instrunctions, input2, "inputUI_admin");
 
                 if (input2 == "1") {
                     string title2;
-                    cout << "New Title: ";
-                    cin.ignore();
-                    getline(cin, title2);
+                    // Getting and Validating the input
+                    valid.validateCycle("", title2, "titel");
 
                     admin.updateTitel(film, title2);
                     // The edit will also be visible if the user has this film added in the watchlist
@@ -344,9 +282,8 @@ Administrator Ui::adminActions(){
                 }
                 else if (input2 == "2") {
                     string genre;
-                    cout << "New Genre: ";
-                    cin.ignore();
-                    getline(cin, genre);
+                    // Getting and Validating the input
+                    valid.validateCycle("", genre, "genre");
 
                     admin.updateGenre(film, genre);
                     // The edit will also be visible if the user has this film added in the watchlist
@@ -358,54 +295,40 @@ Administrator Ui::adminActions(){
                     break;
                 }
                 else if (input2 == "3") {
-                    double jahr;
-                    cout << "New Jahr: ";
-                    cin >> jahr;
-                    while(!cin) // or if(cin.fail())
-                    {
-                        // user didn't input a number
-                        cin.clear(); // reset failbit
-                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //skip bad input
-                        cout<<"Invalid input\n";
-                        cout<<"New Jahr: "; cin >> jahr;
-                    }
+                    string jahr;
+                    // Getting and Validating the input
+                    valid.validateCycle("", jahr, "jahr");
 
-                    admin.updateJahr(film, jahr);
+                    
+                    double d_jahr = stod(jahr);
+                    admin.updateJahr(film, d_jahr);
                     // The edit will also be visible if the user has this film added in the watchlist
                     if (user.search_film(film)) {
                         user.removeFilmFromWatchList(film);
-                        film.setJahr(jahr);
+                        film.setJahr(d_jahr);
                         user.addFilmToWatchList(film);
                     }
                     break;
                 }
                 else if (input2 == "4") {
-                    double likes;
-                    cout << "Likes: ";
-                    cin >> likes;
-                    while(!cin) // or if(cin.fail())
-                    {
-                        // user didn't input a number
-                        cin.clear(); // reset failbit
-                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //skip bad input
-                        cout<<"Invalid input\n";
-                        cout<<"Likes: "; cin >> likes;
-                    }
+                    string likes;
+                    // Getting and Validating the input
+                    valid.validateCycle("", likes, "likes");
 
-                    admin.updateLikes(film, likes);
+                    double d_likes = stod(likes);
+                    admin.updateLikes(film, d_likes);
                     // The edit will also be visible if the user has this film added in the watchlist
                     if (user.search_film(film)) {
                         user.removeFilmFromWatchList(film);
-                        film.setLikes(likes);
+                        film.setLikes(d_likes);
                         user.addFilmToWatchList(film);
                     }
                     break;
                 }
                 else if (input2 == "5") {
                     string trailer;
-                    cout << "New Trailer: ";
-                    cin.ignore();
-                    getline(cin, trailer);
+                    // Getting and Validating the input
+                    valid.validateCycle("", trailer, "trailer");
                     
                     admin.updateTrailer(film, trailer);
                     // The edit will also be visible if the user has this film added in the watchlist

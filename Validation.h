@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 class Validation {
 public:
 	// Validates input from the main page
@@ -17,10 +16,12 @@ public:
 	bool validate_inputUI_3(std::string);
 
 	// Validates input for numbers
-    bool validate_inputUi_number(const std::string& s);
+	bool validate_inputUi_number(const std::string& s);
 
-    bool validate_inputUi_jahr(double jahr);
-
-
+	// Validates the input for the year
+	bool validate_inputUi_jahr(double jahr);
+	
+	// Uses all of the above functions
+	std::string validateCycle(std::string text, std::string& input, std::string type);
 };
 

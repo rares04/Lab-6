@@ -52,7 +52,7 @@ void User::removeFilmFromWatchList(Film _film) {
             return;
         }
     // Film was not found, nothing will be erased
-    cout << "\tFilm " << _film.getTitel() << " existiert nicht, nichts wird geloscht\n";
+    cout << "\tFilm " << _film.getTitel() << " existiert nicht user's watchlist nichts wird geloscht von watchlist\n";
 }
 
 
