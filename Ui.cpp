@@ -248,10 +248,9 @@ Administrator Ui::adminActions(){
                     break;
                 }
             }
-            if (film.getTitel() == "") {
+            if (film.getTitel() == "")
                 cout << "Film not found\n";
-
-            }
+            else
             while (true) {
                 string input2;
                 //infos for editing a film

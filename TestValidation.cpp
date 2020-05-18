@@ -1,4 +1,5 @@
 #include "TestValidation.h"
+#include "BadInput.h"
 #include <cassert>
 #include <iostream>
 
@@ -91,6 +92,40 @@ void TestValidation::TestvalidateCycle() {
 }
 
 
+void TestValidation::TestBadInput() {
+	BadInput bad0;
+	std::string x = bad0.what();
+	assert(x == "Bad input");
+	BadInput bad1("inputUI");
+	x = bad1.what();
+	assert(x == "\nInput was not correct, please choose between 0, 1 and 2\n");
+	BadInput bad2("inputUI_user");
+	x = bad2.what();
+	assert(x == "\nInput was not correct, please choose between 1, 2, 3 and 4\n");
+	BadInput bad3("inputUI_3");
+	x = bad3.what();
+	assert(x == "\nInput was not correct, please choose between  1, 2, and 3\n");
+	BadInput bad4("inputUI_admin");
+	x = bad4.what();
+	assert(x == "\nInput was not correct, please choose between 1, 2, 3, 4 and  5\n");
+	BadInput bad5("titel");
+	x = bad5.what();
+	assert(x == "\nInput was not correct, please choose a non numeric name\n");
+	BadInput bad6("genre");
+	x = bad6.what();
+	assert(x == "\nInput was not correct, please choose a non numeric genre\n");
+	BadInput bad7("jahr");
+	x = bad7.what();
+	assert(x == "\nInput was not correct, please choose a correct number between 0 and 2020\n");
+	BadInput bad8("likes");
+	x = bad8.what();
+	assert(x == "\nInput was not correct, please choose a number for likes\n");
+	BadInput bad9("trailer");
+	x = bad9.what();
+	assert(x == "\nInput was not correct, please choose a correct url\n");
+}
+
+
 void TestValidation::testAll() {
 	std::cout << "\nTest Validation\n";
 	Testvalidate_inputUI();
@@ -100,5 +135,6 @@ void TestValidation::testAll() {
 	Testvalidate_inputUi_number();
 	Testvalidate_inputUi_jahr();
 	TestvalidateCycle();
+	TestBadInput();
 	std::cout << "\n";
 }

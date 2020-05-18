@@ -25,6 +25,9 @@ private:
 
 	// Tests the function that uses all the functions from Validation c;ass
 	void TestvalidateCycle();
+
+	// Tests BadInput Exception class
+	void TestBadInput();
 public:
 	void testAll();
 };

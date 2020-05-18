@@ -44,6 +44,7 @@ bool Validation::validate_inputUi_jahr(double jahr){
 
 std::string Validation::validateCycle(std::string text, std::string& input, std::string type) {
     // Validating the input
+    bool firstTime = true;
     while (true) {
         try {
             if (type == "inputUI") {
@@ -56,7 +57,7 @@ std::string Validation::validateCycle(std::string text, std::string& input, std:
             }
             else if (type == "inputUI_user") {
                 cout << text;
-                cout << "\n\nInput: "; cin >> input;
+                cout << "\nInput: "; cin >> input;
                 if (validate_inputUI_user(input) == false)
                     throw BadInput("inputUI_user");
                 else
@@ -65,7 +66,7 @@ std::string Validation::validateCycle(std::string text, std::string& input, std:
 
             else if (type == "inputUI_3") {
                 cout << text;
-                cout << "\n\nInput: "; cin >> input;
+                cout << "\nInput: "; cin >> input;
                 if (validate_inputUI_3(input) == false)
                     throw BadInput("inputUI_3");
                 else
@@ -74,17 +75,18 @@ std::string Validation::validateCycle(std::string text, std::string& input, std:
 
             else if (type == "inputUI_admin") {
                 cout << text;
-                cout << "\n\nInput: "; cin >> input;
+                cout << "\nInput: "; cin >> input;
                 if (validate_inputUI_admin(input) == false)
                     throw BadInput("inputUI_admin");
                 else
                     break;
             }
             else if (type == "titel") {
-                cin.ignore();
+                cout << "\nIf 'enter Title:' does not appear, press enter";
+                if(firstTime == true)
+                    cin.ignore(1000, '\n');
                 cout << "\nEnter Title: ";
                 getline(cin, input);
-                cout << input;
                 try {
                     if (validate_inputUi_number(input) == true)
                         throw BadInput("titel");
@@ -93,9 +95,12 @@ std::string Validation::validateCycle(std::string text, std::string& input, std:
                 catch (BadInput& b) {
                     cout << b.what();
                 }
+                firstTime = false;
             }
             else if (type == "genre") {
-                cin.ignore();
+                cout << "\nIf 'enter Genre:' does not appear, press enter";
+                if (firstTime == true)
+                    cin.ignore(1000, '\n');
                 cout << "\nEnter Genre: ";
                 getline(cin, input);
                 try {
@@ -106,9 +111,12 @@ std::string Validation::validateCycle(std::string text, std::string& input, std:
                 catch (BadInput& b) {
                     cout << b.what();
                 }
+                firstTime = false;
             }
             else if (type == "trailer") {
-                cin.ignore();
+                cout << "\nIf 'enter Trailer:' does not appear, press enter";
+                if (firstTime == true)
+                    cin.ignore(1000, '\n');
                 cout << "\nEnter Trailer: ";
                 getline(cin, input);
                 try {
@@ -119,11 +127,12 @@ std::string Validation::validateCycle(std::string text, std::string& input, std:
                 catch (BadInput& b) {
                     cout << b.what();
                 }
+                firstTime = false;
             }
             else if (type == "jahr") {
                 cout << "\nEnter Jahr: "; cin >> input;
-                double d_input = stod(input);
                 try {
+                    double d_input = stod(input);
                     if (validate_inputUi_jahr(d_input) == false)
                         throw BadInput("jahr");
                     else break;
@@ -131,12 +140,16 @@ std::string Validation::validateCycle(std::string text, std::string& input, std:
                 catch (BadInput& b) {
                     cout << b.what();
                 }
+                catch (invalid_argument invalid) {
+                    BadInput b("jahr");
+                    cout << b.what();
+                }
             }
             else if (type == "likes") {
                 cout << "\nEnter Likes: "; cin >> input;
                 try {
                     if (validate_inputUi_number(input) == false)
-                        throw BadInput("jahr");
+                        throw BadInput("likes");
                     else break;
                 }
                 catch (BadInput& b) {

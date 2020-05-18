@@ -1,4 +1,4 @@
-[2020-05-09 19:29:26] [info] Start Program:
+[2020-05-18 11:16:03] [info] Start Program:
 Path:"D:\\Facultate\\Semestrul 2\\C++\\Lab 6\\Debug\\Lab 6.exe"
 Arguments:
 Working directory: "D:\\Facultate\\Semestrul 2\\C++\\Lab 6\\"
@@ -9,13 +9,13 @@ Cover Children: 0
 Aggregate by file: 1
 Continue after C++ exception: 0
 Optimized build support: 0
-Export: binary C:\Users\rares\AppData\Local\Temp\y2ieq1bt.dzf 
+Export: binary C:\Users\rares\AppData\Local\Temp\5haotsfp.a2d 
 Input coverage: 
 Unified diff: 
 Excluded line regular expressions: 
 Substitute pdb source paths: 
 
-[2020-05-09 19:29:26] [info] Module: D:\Facultate\Semestrul 2\C++\Lab 6\Debug\Lab 6.exe is selected because it matches selected pattern: D:\Facultate\Semestrul 2\C++\Lab 6\Debug\Lab 6.exe
-[2020-05-09 19:29:27] [info] ----------------------------------------------------
-[2020-05-09 19:29:27] [info] Coverage binary generated in file: C:\Users\rares\AppData\Local\Temp\y2ieq1bt.dzf
-[2020-05-09 19:29:27] [info] ----------------------------------------------------
+[2020-05-18 11:16:04] [info] Module: D:\Facultate\Semestrul 2\C++\Lab 6\Debug\Lab 6.exe is selected because it matches selected pattern: D:\Facultate\Semestrul 2\C++\Lab 6\Debug\Lab 6.exe
+[2020-05-18 11:16:06] [info] ----------------------------------------------------
+[2020-05-18 11:16:06] [info] Coverage binary generated in file: C:\Users\rares\AppData\Local\Temp\5haotsfp.a2d
+[2020-05-18 11:16:06] [info] ----------------------------------------------------
