@@ -4,6 +4,8 @@
 #include <algorithm>
 #include "BadInput.h"
 #include "Validation.h"
+#include "HtmlBuilder.h"
+#include "CsvBuilder.h"
 
 using namespace std;
 
@@ -40,15 +42,22 @@ void Ui::ui_main() {
 
     // The programm reaches this point before ending -> write the changes in the file
     this->admin.getFilmRepo().write_movies_to_file("movies.txt");
+
+    HtmlBuilder htmlBuild = HtmlBuilder();
+    CsvBuilder csvBuild = CsvBuilder();
+    htmlBuild.build_watchlist(user.getWatchList(), user.getFilmRepo());
+    csvBuild.build_watchlist(user.getWatchList(), user.getFilmRepo());
 }
 
 User Ui::userActions(){
     // Infos for admin actions
     // 4 Possible Operations with 4 if statements
     User utilizator = user;
+    HtmlBuilder htmlBuild= HtmlBuilder();
+    CsvBuilder csvBuild= CsvBuilder();
     string userActions = "\nUser Menu\n1. To show and add movies by genre\n"
                          "2. To rate a movie and delete it\n"
-                         "3. To show the watchList\n"
+                         "3. To select file type and show the watchlist in the given type\n"
                          "4. To close\n";
 
     string input;
@@ -62,8 +71,21 @@ User Ui::userActions(){
             utilizator = filmGenre();
         else if (input == "2")
             utilizator = deleteAndRate();
-        else if (input == "3")
-            utilizator.showWatchList();
+        else if (input == "3") {
+            cout << "\nExport\n\nGive file type(html, csv): ";
+            string option;
+            cin >> option;
+            if (option == "html"){
+                htmlBuild.build_watchlist(user.getWatchList(), user.getFilmRepo());
+                system(string("cmd /c start  watchlist.html").c_str());
+            }
+            else if (option == "csv"){
+                csvBuild.build_watchlist(user.getWatchList(), user.getFilmRepo());
+                system(string("cmd /c start  watchlist.csv").c_str());
+            }
+            else
+                cout<< "Invalid input\n";
+        }
         else if(input == "4")
             break;
     }
@@ -80,7 +102,7 @@ User Ui::filmGenre(){
     string genre = "";
     cout << "\nType Genre:";
     cin >> genre;  // No validation for genre needed, because if movies with the given genre don't exit -> all movies will be shown
-    
+
     // gets all film from the typed genre
     vector <Film> filmeByGenre = user.getFilmRepo().getFilme_byGenre(genre);
     int index = 0;
@@ -195,7 +217,7 @@ Administrator Ui::adminActions(){
         // reads all the film atributes from input and add the film to the repo
         if (input == "1"){
             string title, genre, jahr, likes, trailer;
-            
+
             // Getting and Validating the input
             valid.validateCycle("", title, "titel");
 
@@ -204,7 +226,7 @@ Administrator Ui::adminActions(){
 
             // Getting and Validating the input
             valid.validateCycle("", jahr, "jahr");
-            
+
             // Getting and Validating the input
             valid.validateCycle("", likes, "likes");
 
@@ -216,7 +238,7 @@ Administrator Ui::adminActions(){
             Film film = Film(title, genre, d_jahr, d_likes, trailer);
             admin.addFilm(film);
         }
-        // Checks if the typed film is in the repository and if it is, deletes it
+            // Checks if the typed film is in the repository and if it is, deletes it
         else if (input == "2") {
             string title;
             Film film = Film("", "", 0, 0, "");
@@ -231,7 +253,7 @@ Administrator Ui::adminActions(){
             }
             if (film.getTitel() == "") {
                 cout << "Film not found\n";
-            } 
+            }
             else {
                 admin.deleteFilm(film);
                 user.removeFilmFromWatchList(film);
@@ -251,94 +273,94 @@ Administrator Ui::adminActions(){
             if (film.getTitel() == "")
                 cout << "Film not found\n";
             else
-            while (true) {
-                string input2;
-                //infos for editing a film
-                string instrunctions = "\nWhat do you want to edit?\n"
-                                       "1. To edit title\n"
-                                       "2. To edit genre\n"
-                                       "3. To edit jahr\n"
-                                       "4. To edit likes\n"
-                                       "5. To edit Trailer\n"
-                                       "Input: ";
+                while (true) {
+                    string input2;
+                    //infos for editing a film
+                    string instrunctions = "\nWhat do you want to edit?\n"
+                                           "1. To edit title\n"
+                                           "2. To edit genre\n"
+                                           "3. To edit jahr\n"
+                                           "4. To edit likes\n"
+                                           "5. To edit Trailer\n"
+                                           "Input: ";
 
-                // Getting and Validating the input
-                valid.validateCycle(instrunctions, input2, "inputUI_admin");
-
-                if (input2 == "1") {
-                    string title2;
                     // Getting and Validating the input
-                    valid.validateCycle("", title2, "titel");
+                    valid.validateCycle(instrunctions, input2, "inputUI_admin");
 
-                    admin.updateTitel(film, title2);
-                    // The edit will also be visible if the user has this film added in the watchlist
-                    if (user.search_film(film)) {
-                        user.removeFilmFromWatchList(film);
-                        film.setTitel(title2);
-                        user.addFilmToWatchList(film);
-                    }
-                    break;
-                }
-                else if (input2 == "2") {
-                    string genre;
-                    // Getting and Validating the input
-                    valid.validateCycle("", genre, "genre");
+                    if (input2 == "1") {
+                        string title2;
+                        // Getting and Validating the input
+                        valid.validateCycle("", title2, "titel");
 
-                    admin.updateGenre(film, genre);
-                    // The edit will also be visible if the user has this film added in the watchlist
-                    if (user.search_film(film)) {
-                        user.removeFilmFromWatchList(film);
-                        film.setGenre(genre);
-                        user.addFilmToWatchList(film);
+                        admin.updateTitel(film, title2);
+                        // The edit will also be visible if the user has this film added in the watchlist
+                        if (user.search_film(film)) {
+                            user.removeFilmFromWatchList(film);
+                            film.setTitel(title2);
+                            user.addFilmToWatchList(film);
+                        }
+                        break;
                     }
-                    break;
-                }
-                else if (input2 == "3") {
-                    string jahr;
-                    // Getting and Validating the input
-                    valid.validateCycle("", jahr, "jahr");
+                    else if (input2 == "2") {
+                        string genre;
+                        // Getting and Validating the input
+                        valid.validateCycle("", genre, "genre");
 
-                    
-                    double d_jahr = stod(jahr);
-                    admin.updateJahr(film, d_jahr);
-                    // The edit will also be visible if the user has this film added in the watchlist
-                    if (user.search_film(film)) {
-                        user.removeFilmFromWatchList(film);
-                        film.setJahr(d_jahr);
-                        user.addFilmToWatchList(film);
+                        admin.updateGenre(film, genre);
+                        // The edit will also be visible if the user has this film added in the watchlist
+                        if (user.search_film(film)) {
+                            user.removeFilmFromWatchList(film);
+                            film.setGenre(genre);
+                            user.addFilmToWatchList(film);
+                        }
+                        break;
                     }
-                    break;
-                }
-                else if (input2 == "4") {
-                    string likes;
-                    // Getting and Validating the input
-                    valid.validateCycle("", likes, "likes");
+                    else if (input2 == "3") {
+                        string jahr;
+                        // Getting and Validating the input
+                        valid.validateCycle("", jahr, "jahr");
 
-                    double d_likes = stod(likes);
-                    admin.updateLikes(film, d_likes);
-                    // The edit will also be visible if the user has this film added in the watchlist
-                    if (user.search_film(film)) {
-                        user.removeFilmFromWatchList(film);
-                        film.setLikes(d_likes);
-                        user.addFilmToWatchList(film);
+
+                        double d_jahr = stod(jahr);
+                        admin.updateJahr(film, d_jahr);
+                        // The edit will also be visible if the user has this film added in the watchlist
+                        if (user.search_film(film)) {
+                            user.removeFilmFromWatchList(film);
+                            film.setJahr(d_jahr);
+                            user.addFilmToWatchList(film);
+                        }
+                        break;
                     }
-                    break;
-                }
-                else if (input2 == "5") {
-                    string trailer;
-                    // Getting and Validating the input
-                    valid.validateCycle("", trailer, "trailer");
-                    
-                    admin.updateTrailer(film, trailer);
-                    // The edit will also be visible if the user has this film added in the watchlist
-                    if (user.search_film(film)) {
-                        user.removeFilmFromWatchList(film);
-                        film.setTrailer(trailer);
-                        user.addFilmToWatchList(film);
+                    else if (input2 == "4") {
+                        string likes;
+                        // Getting and Validating the input
+                        valid.validateCycle("", likes, "likes");
+
+                        double d_likes = stod(likes);
+                        admin.updateLikes(film, d_likes);
+                        // The edit will also be visible if the user has this film added in the watchlist
+                        if (user.search_film(film)) {
+                            user.removeFilmFromWatchList(film);
+                            film.setLikes(d_likes);
+                            user.addFilmToWatchList(film);
+                        }
+                        break;
                     }
-                    break;
+                    else if (input2 == "5") {
+                        string trailer;
+                        // Getting and Validating the input
+                        valid.validateCycle("", trailer, "trailer");
+
+                        admin.updateTrailer(film, trailer);
+                        // The edit will also be visible if the user has this film added in the watchlist
+                        if (user.search_film(film)) {
+                            user.removeFilmFromWatchList(film);
+                            film.setTrailer(trailer);
+                            user.addFilmToWatchList(film);
+                        }
+                        break;
+                    }
                 }
-            }
         }// Prints all the films
         else if (input == "4"){
             admin.showFilme();
