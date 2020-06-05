@@ -46,10 +46,10 @@ public:
     // Returns Number of Likes
     double getLikes(Film _film) const;
 
-	// 
+	// Saves the data into the file
 	void write_movies_to_file(string filename);
 
-	// 
+	// Reads the movies from the file
 	void read_movies_from_file(string filename);
 };
 

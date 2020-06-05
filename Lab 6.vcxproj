@@ -140,8 +140,10 @@
   <ItemGroup>
     <ClCompile Include="Administrator.cpp" />
     <ClCompile Include="BadInput.cpp" />
+    <ClCompile Include="CsvBuilder.cpp" />
     <ClCompile Include="Film.cpp" />
     <ClCompile Include="FilmRepository.cpp" />
+    <ClCompile Include="HtmlBuilder.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="TestAdmin.cpp" />
     <ClCompile Include="TestRepo.cpp" />
@@ -151,12 +153,15 @@
     <ClCompile Include="Ui.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="Validation.cpp" />
+    <ClCompile Include="WatchlistBuild.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Administrator.h" />
     <ClInclude Include="BadInput.h" />
+    <ClInclude Include="CsvBuilder.h" />
     <ClInclude Include="Film.h" />
     <ClInclude Include="FilmRepository.h" />
+    <ClInclude Include="HtmlBuilder.h" />
     <ClInclude Include="TestAdmin.h" />
     <ClInclude Include="TestRepo.h" />
     <ClInclude Include="Tests.h" />
@@ -165,6 +170,16 @@
     <ClInclude Include="Ui.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="Validation.h" />
+    <ClInclude Include="WatchlistBuild.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="footer.html" />
+    <None Include="header.html" />
+    <None Include="watchlist.csv" />
+    <None Include="watchlist.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="watchlist.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

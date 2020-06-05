@@ -21,6 +21,8 @@ int main() {
     filmRepo.read_movies_from_file(filename);
 
     User user = User(filmRepo);
+    string filename_watchlist = "watchlist.txt";
+    user.read_movies_from_file(filename_watchlist);   // Saving the movies from the watchlist.txt in the watchlist of the user
     Administrator admin = Administrator(filmRepo);
 
     // Opening the menu

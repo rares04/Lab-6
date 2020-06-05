@@ -42,11 +42,7 @@ void Ui::ui_main() {
 
     // The programm reaches this point before ending -> write the changes in the file
     this->admin.getFilmRepo().write_movies_to_file("movies.txt");
-
-    HtmlBuilder htmlBuild = HtmlBuilder();
-    CsvBuilder csvBuild = CsvBuilder();
-    htmlBuild.build_watchlist(user.getWatchList(), user.getFilmRepo());
-    csvBuild.build_watchlist(user.getWatchList(), user.getFilmRepo());
+    this->user.write_movies_to_file("watchlist.txt");
 }
 
 User Ui::userActions(){

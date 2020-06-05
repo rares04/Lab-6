@@ -39,4 +39,10 @@ public:
 
     // Returns the adress of the FilmRepository attribute
     FilmRepository& getFilmRepo();
+
+    // Saves the data into the file
+    void write_movies_to_file(string filename);
+
+    // Reads the movies from the file
+    void read_movies_from_file(string filename);
 };

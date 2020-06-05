@@ -1,2 +1,42 @@
-﻿  TestValidation.cpp
+﻿  Administrator.cpp
+  CsvBuilder.cpp
+D:\Facultate\Semestrul 2\C++\Lab 6\CsvBuilder.cpp(14,23): warning C4018: '<': signed/unsigned mismatch
+  FilmRepository.cpp
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(13,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(25,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(35,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(45,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(55,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(65,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(76,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(92,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(108,20): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(116,22): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(125,22): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(163,39): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(169,39): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(175,39): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(182,39): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(189,40): warning C4018: '<': signed/unsigned mismatch
+  HtmlBuilder.cpp
+D:\Facultate\Semestrul 2\C++\Lab 6\HtmlBuilder.cpp(14,23): warning C4018: '<': signed/unsigned mismatch
+  Main.cpp
+  TestAdmin.cpp
+  TestRepo.cpp
+  TestUser.cpp
+  Tests.cpp
+  Ui.cpp
+  User.cpp
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(36,23): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(49,23): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(63,22): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(70,23): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(113,39): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(119,39): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(125,39): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(132,39): warning C4018: '<': signed/unsigned mismatch
+D:\Facultate\Semestrul 2\C++\Lab 6\User.cpp(139,40): warning C4018: '<': signed/unsigned mismatch
+  WatchlistBuild.cpp
+  Generating Code...
+D:\Facultate\Semestrul 2\C++\Lab 6\FilmRepository.cpp(111): warning C4715: 'FilmRepository::getFilm_byMatch': not all control paths return a value
   Lab 6.vcxproj -> D:\Facultate\Semestrul 2\C++\Lab 6\Debug\Lab 6.exe

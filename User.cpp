@@ -1,5 +1,6 @@
 #include "User.h"
 #include "Film.h"
+#include <fstream>
 
 using namespace std;
 
@@ -75,4 +76,70 @@ bool User::search_film(Film _film) const {
 
 void User::like(Film _film){
     filmRepo.updateLikes(_film, _film.getLikes() + 1); //adds one like to the film
+}
+
+
+void User::write_movies_to_file(string filename) {
+	ofstream fin;
+	fin.open(filename, ofstream::out | ofstream::trunc);
+
+	for (size_t i = 0; i < watchList.size(); i++)
+		fin << watchList[i].getTitel() << "," << watchList[i].getGenre() << "," << watchList[i].getJahr() << "," << watchList[i].getLikes() << "," << watchList[i].getTrailer() << "\n";
+
+	fin.close();
+}
+
+
+void User::read_movies_from_file(string filename) {
+	ifstream fout;
+
+	fout.open(filename.c_str());
+
+	char text[1000];
+	int index = 0;
+
+	while (!fout.eof()) {
+		fout.getline(text, 1000);
+		index = 0;
+		// We save the text read from the file to the variable line
+		string line = text;
+
+		// If the text is empty, then stop
+		if (line == "")
+			break;
+
+		// Saving the titel of the movie
+		string titel = "";
+		while (line[index] != ',' and index < line.length())
+			titel = titel + line[index++];
+
+		// Saving the genre of the movie
+		index++;
+		string genre = "";
+		while (line[index] != ',' and index < line.length())
+			genre = genre + line[index++];
+
+		// Saving the year of the movie
+		index++;
+		string jahr = "";
+		while (line[index] != ',' and index < line.length())
+			jahr = jahr + line[index++];
+		double d_jahr = std::stod(jahr);
+
+		// Saving the number of likes of the movie
+		index++;
+		string likes = "";
+		while (line[index] != ',' and index < line.length())
+			likes = likes + line[index++];
+		double d_likes = std::stod(likes);
+
+		// Saving the trailer of the movie
+		index++;
+		string trailer = "";
+		while (line[index] != '\n' and index < line.length())
+			trailer = trailer + line[index++];
+
+		Film new_film = Film(titel, genre, d_jahr, d_likes, trailer);
+		addFilmToWatchList(new_film);
+	}
 }

@@ -21,5 +21,4 @@ void HtmlBuilder::build_watchlist(vector <Film> watchlist, FilmRepository repo)
     string str;
     while (getline(file, str))
         fin << str << '\n';
-
 }

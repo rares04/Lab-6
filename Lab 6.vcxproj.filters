@@ -54,6 +54,15 @@
     <ClCompile Include="BadInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CsvBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WatchlistBuild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Administrator.h">
@@ -92,5 +101,23 @@
     <ClInclude Include="BadInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CsvBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WatchlistBuild.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="footer.html" />
+    <None Include="header.html" />
+    <None Include="watchlist.csv" />
+    <None Include="watchlist.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="watchlist.txt" />
   </ItemGroup>
 </Project>
